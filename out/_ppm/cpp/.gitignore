@@ -1,5 +1,5 @@
 makefile
 bin
-out/*.exe
+out
 _objs
 *.stackdump
