@@ -35,6 +35,9 @@ OUTPUT_FULL = $(OUTPUT_DIR)/$(OUTPUT_NAME)$(OUTPUT_EXT)
 default: build
 
 # Files
+INCLUDES=
+-include constants.config
+CFLAGS += INCLUDES
 -include _objs
 
 # Build command
