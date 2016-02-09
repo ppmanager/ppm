@@ -84,8 +84,7 @@ int main(int argc, char* argv[])
 		getOutput() << "Usage : ppm <package_name> <project_name> [<package_options>]" << std::endl;
 		getOutput() << "Usage : ppm <package_name> . [<package_options>]" << std::endl;
 		getOutput() << "Packages :" << std::endl;
-		getOutput() << " * cpp" << std::endl;
-		getOutput() << " * latex" << std::endl;
+		MODULES_HELP
 	}
 	else if(done)
 	{ // Well created the package
