@@ -1,5 +1,5 @@
-makefile
-bin
-out/ppm*
-_objs
-*.stackdump
+/makefile
+/bin
+/out/ppm*
+/_objs
+/*.stackdump
