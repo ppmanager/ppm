@@ -1,6 +1,7 @@
 #ifndef _MODULES_H
 #define _MODULES_H
 
+#include "modules/licence/licence.h"
 #include "modules/latex/latex.h"
 #include "modules/java/java.h"
 #include "modules/cpp/cpp.h"
@@ -17,6 +18,7 @@ else if(::strcmp(pkg, #name) == 0) \
 	
 	
 #define MODULES \
+	__MODULE__(licence) \
 	__MODULE__(latex) \
 	__MODULE__(java) \
 	__MODULE__(cpp) \
@@ -24,6 +26,7 @@ else if(::strcmp(pkg, #name) == 0) \
 	
 
 #define MODULES_HELP \
+	__MODULE_HELP__(licence) \
 	__MODULE_HELP__(latex) \
 	__MODULE_HELP__(java) \
 	__MODULE_HELP__(cpp) \
