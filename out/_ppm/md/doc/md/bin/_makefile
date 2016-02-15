@@ -1,0 +1,15 @@
+
+-include $(MD_WORKING_DIR)/_config
+
+MD_OUTPUT_FULLPATH = $(MD_OUTPUT_DIR)/$(MD_OUTPUT_NAME).html
+MD_INPUT_FULLPATH = $(MD_INPUT_DIR)/$(MD_INPUT_NAME).md
+
+md: mdinit $(MD_OUTPUT_FULLPATH)
+	@echo "Document(s) created with success."
+
+mdinit:
+	@mkdir -p "$(MD_OUTPUT_DIR)"
+	
+$(MD_OUTPUT_FULLPATH): $(MD_INPUT_FULLPATH)
+	@pandoc -s -S -f markdown --css mk/css/style.css -t html -o "$(MD_OUTPUT_FULLPATH)" "$(MD_INPUT_FULLPATH)"
+	

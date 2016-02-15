@@ -73,7 +73,7 @@ void copyFolder(const char* from, const char* to)
 	char* filePathSub;
 	char destFilePath[strlen(to) + 50];
 	char* destFilePathSub;
-	char folderPath[strlen(from) + 2];
+	char folderPath[strlen(from) + 3];
 	bool isDir;
 	bool skip;
 	bool exit = false;

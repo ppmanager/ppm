@@ -18,13 +18,22 @@ SOURCE_DIR = src
 DEFAULT_SOURCE_NAME = _default
 COMP = g++
 
+# (x86)
+COMP_VERSION=IS_32
+CFLAG_VERSION = 
+
+# (64)
+# COMP_VERSION=IS_64 
+# CFLAG_VERSION = -m64 
+
+
+
+
+
 # Macros
 DEFAULT_SOURCE_DIR = ${SOURCE_DIR}/${DEFAULT_SOURCE_NAME}
-CFLAGS = -std=c++11 -Wall -I$(SOURCE_DIR) -I${DEFAULT_SOURCE_DIR} -D$(OPERATING_SYSTEM) -w
+CFLAGS = $(CFLAG_VERSION) -std=c++11 -Wall -I$(SOURCE_DIR) -I${DEFAULT_SOURCE_DIR} -D$(OPERATING_SYSTEM) -D$(COMP_VERSION)  -w
 OUTPUT_FULL = $(OUTPUT_DIR)/$(OUTPUT_NAME)$(OUTPUT_EXT)
-
-
-
 
 
 ####################################
@@ -37,12 +46,12 @@ default: build
 # Files
 INCLUDES=
 -include constants.config
-CFLAGS += INCLUDES
+CFLAGS += $(INCLUDES)
 -include _objs
 
 # Build command
 ifneq ("$(wildcard src/_libs/mutex)","")
-build: CFLAGS += -D__MUTEX_LIB_INCLUDED__ -DIIIIII
+build: CFLAGS += -D__MUTEX_LIB_INCLUDED__ 
 endif
 build: init build_all
 	@$(COMP) $(CFLAGS) $(OBJSX) -o $(OUTPUT_FULL) $(LIBS)

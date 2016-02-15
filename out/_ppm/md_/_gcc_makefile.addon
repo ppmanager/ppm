@@ -1,0 +1,11 @@
+
+####################################
+#           Documentation          #
+####################################
+# Settings
+MD_ROOT_DIR = doc
+MD_WORKING_DIR = $(MD_ROOT_DIR)/md
+
+# Execution
+doc: md
+-include $(MD_WORKING_DIR)/bin/_makefile

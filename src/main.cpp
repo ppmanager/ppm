@@ -64,15 +64,6 @@ int main(int argc, char* argv[])
 		
 		displayHelp = false;
 		
-		
-		/*
-		if(::strcmp(pkg, "cpp") == 0)
-			done = ::cpp(optionNb, options);
-		else if(::strcmp(pkg, "latex") == 0)
-			done = ::latex(optionNb, options);
-		else if(::strcmp(pkg, "java") == 0)
-			done = ::java(optionNb, options);*/
-		
 		if(false);
 			MODULES
 		else 
