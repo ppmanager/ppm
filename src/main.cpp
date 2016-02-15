@@ -62,6 +62,10 @@ int main(int argc, char* argv[])
 		int optionNb = argc - 2;
 		char** options = argv + 2;
 		
+		int pkgSize = ::strlen(pkg);
+		for(int i = 0; i < pkgSize; ++i)
+			pkg[i] = ::tolower(pkg[i]);
+		
 		displayHelp = false;
 		
 		if(false);
