@@ -1,16 +1,10 @@
 #include "md.h"
+#include "compilers/compilers.h"
 
-#define MD_COMPILER_UNKOWN 0
-#define MD_COMPILER_GCC 1
-#define MD_COMPILER_CL 2
-
-static bool addRootFiles(int compiler, const char* makefileType);
+static bool addRootFiles(int compiler, const char* strCompiler);
 static bool addLibraries(std::list<char*>& libraries);
-static int getCompiler(char* makefileType);
 static bool showPackageDetecting();
 static bool detectInstallation();
-static bool helpCompilers();
-static bool helpLibs();
 static bool showHelp();
 
 
@@ -36,7 +30,7 @@ bool md(int argc, char* argv[])
 	std::list<char*> libraries;
 	std::map<char, bool> options;
 	
-	char* makefileType = 0;
+	char* compiler = 0;
 	
 	options.emplace('u', false); // upgrade
 	
@@ -45,7 +39,7 @@ bool md(int argc, char* argv[])
 		if(::strncmp(argv[i], "-l", 2) == 0)
 			libraries.emplace_back(argv[i] + 2);
 		else if(::strncmp(argv[i], "-c", 2) == 0)
-			makefileType = argv[i] + 2;
+			compiler = argv[i] + 2;
 		else if(::strcmp(argv[i], "-hl") == 0)
 			helpLib = true;
 		else if(::strcmp(argv[i], "-hc") == 0)
@@ -68,7 +62,7 @@ bool md(int argc, char* argv[])
 		return showHelp();
 	
 	if(helpLib)
-		return helpLibs();
+		return helpLibs("_ppm\\md_libs");
 	
 	if(helpCompiler)
 		return helpCompilers();
@@ -80,13 +74,13 @@ bool md(int argc, char* argv[])
 	
 	if(!options['u'])
 	{ // Add root files
-		if(!makefileType)
+		if(!compiler)
 		{
-			getOutput() << "/!\\ Makefile type not defined!" << std::endl;
+			getOutput() << "/!\\ Compiler type not defined!" << std::endl;
 			return false;
 		}
 		
-		if(!addRootFiles(getCompiler(makefileType), makefileType))
+		if(!addRootFiles(getCompiler(compiler), compiler))
 			return false;
 	}
 	
@@ -100,28 +94,12 @@ static bool detectInstallation()
 	return !stat("doc\\md", &info);
 }
 
-static int getCompiler(char* makefileType)
-{
-	int compilerSize = ::strlen(makefileType);
-	for(int i = 0; i < compilerSize; ++i)
-		makefileType[i] = ::tolower(makefileType[i]);
-	
-	if(::strcmp(makefileType, "gcc") ||
-	   ::strcmp(makefileType, "g++") ||
-	   ::strcmp(makefileType, "mingw"))
-		return MD_COMPILER_GCC;
-	else if(::strcmp(makefileType, "cl"))
-		return MD_COMPILER_CL;
-	
-	return MD_COMPILER_UNKOWN;
-}
 
-
-static bool addRootFiles(int compiler, const char* makefileType)
+static bool addRootFiles(int compiler, const char* strCompiler)
 {
-	if(compiler == MD_COMPILER_UNKOWN)
+	if(compiler == COMPILER_UNKOWN)
 	{
-		getOutput() << "/!\\ Unkown compiler \"" << makefileType << "\"." << std::endl;
+		getOutput() << "/!\\ Unkown compiler \"" << strCompiler << "\"." << std::endl;
 		return false;
 	}
 	
@@ -139,12 +117,13 @@ static bool addRootFiles(int compiler, const char* makefileType)
 	
 	switch(compiler)
 	{
-		case MD_COMPILER_GCC:
+		case COMPILER_MINGW:
+		case COMPILER_GCC:
 			sprintf(srcMakefile, "%s\\%s", appRoot, "_ppm\\md_\\_gcc_makefile.addon");
 			destMakefile = "_makefile";
 			break;
 		
-		case MD_COMPILER_CL:
+		case COMPILER_CL:
 			sprintf(srcMakefile, "%s\\%s", appRoot, "_ppm\\md_\\_cl_makefile.addon");
 			destMakefile = "makefile";
 			break;
@@ -174,25 +153,6 @@ static bool addLibraries(std::list<char*>& libraries)
 		copyRootFolder(libPath, destLibPath);
 	}
 	
-	return true;
-}
-
-static bool helpLibs()
-{
-	char path[strlen(appRoot) + strlen("_ppm\\md_libs\\*") + 2];
-	sprintf(path, "%s\\_ppm\\md_libs\\*", appRoot);
-	
-	getOutput() << "List of libraries :" << std::endl;
-	listAllFiles(path, " * ");
-	return true;
-}
-
-static bool helpCompilers()
-{
-	getOutput() << "List of supported compilers :" << std::endl;
-	getOutput() << " * GCC" << std::endl;
-	getOutput() << " * MinGW" << std::endl;
-	getOutput() << " * CL" << std::endl;
 	return true;
 }
 

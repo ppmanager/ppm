@@ -22,4 +22,6 @@ std::ostream& getOutput()
 std::ostream& setOutput(std::ostream* output)
 {
 	___output = output;
+	
+	return *___output;
 }

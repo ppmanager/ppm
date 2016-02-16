@@ -68,6 +68,8 @@ int main(int argc, char* argv[])
 		
 		displayHelp = false;
 		
+		config.load();
+		
 		if(false);
 			MODULES
 		else 

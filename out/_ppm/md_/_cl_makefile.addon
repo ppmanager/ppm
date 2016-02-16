@@ -8,4 +8,5 @@ MD_WORKING_DIR = $(MD_ROOT_DIR)/md
 
 # Execution
 doc: md
+!INCLUDE $(MD_WORKING_DIR)/_config
 !INCLUDE $(MD_WORKING_DIR)/bin/_makefile

@@ -1,3 +1,2 @@
-
 # Libraries
 LIBS = -lws2_32 -lwsock32
